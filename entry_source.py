@@ -31,7 +31,7 @@ Z=[]
 _r=123456789
 for _i in range(2300):
  _r=(_r*6364136223846793005+1442695040888963407)&0x3FFFFFFFFFFFFFF;Z.append(_r)
-C1=Z[2000];HK=0
+C1=Z[2000];HK=0;HST=[0]*10000
 def keyk():return HK^(0 if EP==0 else Z[2200+EP])^Z[2100+((1 if"K"in CR else 0)+(2 if"Q"in CR else 0)+(4 if"k"in CR else 0)+(8 if"q"in CR else 0))]
 def rel(s,w):
  row=s//10-2;f=s%10-1
@@ -279,8 +279,8 @@ def sr(d,a,z,pl):
  if e:tm=e[3]
  ms=gen()
  kl=KL.get(pl)
- if tm in ms:ms.sort(key=lambda m:0 if m==tm else(-20000 if kl and m in kl else ordk(m)))
- else:ms.sort(key=ordk if not kl else lambda m:-20000 if m in kl else ordk(m))
+ if tm in ms:ms.sort(key=lambda m:0 if m==tm else(-20000 if kl and m in kl else ordk(m)+(HST[m[0]*100+m[1]]if B[m[1]]=="."and not m[2]else 0)))
+ else:ms.sort(key=(lambda m:ordk(m)+(HST[m[0]*100+m[1]]if B[m[1]]=="."and not m[2]else 0))if not kl else lambda m:-20000 if m in kl else ordk(m)+(HST[m[0]*100+m[1]]if B[m[1]]=="."and not m[2]else 0))
  leg=0;best=-MATE;bm=None;oa=a;oz=z
  for m in ms:
   u=mk(m)
@@ -294,6 +294,9 @@ def sr(d,a,z,pl):
     a=sc
     if a>=z:
      KL[pl]=[m]+KL.get(pl,[])[:2]
+     if B[m[1]]=="."and not m[2]:
+      i=m[0]*100+m[1]
+      if HST[i]<9999:HST[i]+=d*d
      break
  if not leg:return-MATE+pl if ic else 0
  if not STOP and len(TT)<150000:TT[kk]=(d,0 if oa<best<oz else(1 if best>=oz else 2),best,bm)

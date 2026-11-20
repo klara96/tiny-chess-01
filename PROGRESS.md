@@ -16,3 +16,4 @@
 - main.py saat ini di repo = build SEBELUM fix (3955B) -> akan re-compress setelah fix dikonfirmasi trial
 # UPDATE 2026-11-20T12:54:55Z: Elo 1099 (1W2D3L) pada trial fix#1+2. Iterasi round-2: QS_MAX 6->4, delta pruning qs, budget 150000. Perft ALL PASS, src 10265B. Trial round-2 launching.
 # UPDATE 2026-11-20T13:12:24Z: round-2 (qs4+delta+150k) REGRESI 0/6 elo 0. Direvert ke search round-1 (qs6, no delta) + budget 350000. Perft PASS. Trial round-3 launching (proc baru).
+# UPDATE 2026-11-20T13:39:09Z: round-3 (revert+350k): 2W4L, elo 1099 (menang checkmate depth-2&3). Round-4: history heuristic utk quiet ordering. src 10475B. Trial round-4 launching.
