@@ -223,7 +223,7 @@ def ordk(m):
 def qs(a,z,qd=0):
  global NODES
  NODES+=1
- if qd>4 or HP>90:return EV if W else-EV
+ if qd>6 or HP>90:return EV if W else-EV
  w=W
  k=KSQ if w else BSQ
  ic=isp(k,not w)
@@ -246,7 +246,6 @@ def qs(a,z,qd=0):
  ms.sort(key=ordk)
  w=W
  for m in ms:
-  if v+VAL.get(B[m[1]] if B[m[1]]!="."else 100,100)+250<=a:continue
   u=mk(m)
   if isp(KSQ if w else BSQ,not w):um(m,u);continue
   sc=-qs(-z,-a,qd+1);um(m,u)
@@ -341,7 +340,7 @@ if __name__=="__main__":
   if g["status"]=="done":break
   while g["status"]=="your_move":
    load(g["fen"])
-   mv=think(150000,g["legal_moves"])
+   mv=think(350000,g["legal_moves"])
    g=post("/move",{"game":g["game"],"move":mv})
   print(f"game {g['game']}: {g['outcome']} by {g['reason']}",file=sys.stderr)
  print(f"done: {g.get('wins')} won, {g.get('draws')} drawn, {g.get('losses')} lost",file=sys.stderr)
