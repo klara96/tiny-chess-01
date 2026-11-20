@@ -14,3 +14,4 @@
 - push GitHub + badge; bundle transcripts dari /root/.hermes-build/.hermes; submit via makefun.mjs
 ## Catatan
 - main.py saat ini di repo = build SEBELUM fix (3955B) -> akan re-compress setelah fix dikonfirmasi trial
+# UPDATE 2026-11-20T12:54:55Z: Elo 1099 (1W2D3L) pada trial fix#1+2. Iterasi round-2: QS_MAX 6->4, delta pruning qs, budget 150000. Perft ALL PASS, src 10265B. Trial round-2 launching.

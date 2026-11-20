@@ -32,7 +32,7 @@ _r=123456789
 for _i in range(2300):
  _r=(_r*6364136223846793005+1442695040888963407)&0x3FFFFFFFFFFFFFF;Z.append(_r)
 C1=Z[2000];HK=0
-def keyk():return HK^(C1 if W else 0)^(0 if EP==0 else Z[2200+EP])^Z[2100+((1 if"K"in CR else 0)+(2 if"Q"in CR else 0)+(4 if"k"in CR else 0)+(8 if"q"in CR else 0))]
+def keyk():return HK^(0 if EP==0 else Z[2200+EP])^Z[2100+((1 if"K"in CR else 0)+(2 if"Q"in CR else 0)+(4 if"k"in CR else 0)+(8 if"q"in CR else 0))]
 def rel(s,w):
  row=s//10-2;f=s%10-1
  return row*8+f if w else(7-row)*8+f
@@ -75,6 +75,7 @@ def load(fen):
    if c=="B":WB+=1
    if c=="b":BB+=1
  EV+=kingd()
+ if not W:HK^=C1
  EV+=30 if WB>=2 else 0
  EV-=30 if BB>=2 else 0
 def isp(s,w):
@@ -212,13 +213,17 @@ def um(m,u):
   elif t==97:b[98],b[96]="r","."
   else:b[91],b[94]="r","."
  EP=e;CR=c;EV-=d1;HK=h;WB=wb;BB=bb;NP=np;KC.clear()
+ if b[s]=="K":KSQ=s
+ elif b[s]=="k":BSQ=s
+ elif b[t]=="K"and q=="c":KSQ=s
+ elif b[t]=="k"and q=="c":BSQ=s
 def ordk(m):
  c=B[m[1]]
  return-(VAL.get(c,0)if c!="."else(900 if m[2]and m[2]not in"ce"else 0))
 def qs(a,z,qd=0):
  global NODES
  NODES+=1
- if qd>6 or HP>90:return EV if W else-EV
+ if qd>4 or HP>90:return EV if W else-EV
  w=W
  k=KSQ if w else BSQ
  ic=isp(k,not w)
@@ -241,6 +246,7 @@ def qs(a,z,qd=0):
  ms.sort(key=ordk)
  w=W
  for m in ms:
+  if v+VAL.get(B[m[1]] if B[m[1]]!="."else 100,100)+250<=a:continue
   u=mk(m)
   if isp(KSQ if w else BSQ,not w):um(m,u);continue
   sc=-qs(-z,-a,qd+1);um(m,u)
@@ -335,7 +341,7 @@ if __name__=="__main__":
   if g["status"]=="done":break
   while g["status"]=="your_move":
    load(g["fen"])
-   mv=think(250000,g["legal_moves"])
+   mv=think(150000,g["legal_moves"])
    g=post("/move",{"game":g["game"],"move":mv})
   print(f"game {g['game']}: {g['outcome']} by {g['reason']}",file=sys.stderr)
  print(f"done: {g.get('wins')} won, {g.get('draws')} drawn, {g.get('losses')} lost",file=sys.stderr)
