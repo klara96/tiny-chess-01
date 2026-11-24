@@ -1,3 +1,6 @@
 __pycache__/
 entry_source.py
 PROGRESS.md
+
+.done
+cand*.py
